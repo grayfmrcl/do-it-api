@@ -69,7 +69,6 @@
 
   | key      | type     | required |
   |---       |---       |---       |
-  | name     | String   | no       |
   | email    | Email    | yes      |
   | password | Password | yes      |
 
@@ -80,7 +79,7 @@
   ```json
   {
     "id": "1qaz2wsx3edc4rfv4rfv5tgb",
-    "name": "Tieria",
+    "name": "John Doe",
     "auth_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
   }
   ```
