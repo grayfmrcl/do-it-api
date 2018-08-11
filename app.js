@@ -22,7 +22,7 @@ app.use(express.json())
 app.use('/', routers)
 
 app.use('*', function (req, res) {
-    res.status(404).json({ message: `NOT FOUND` });
+    res.status(404).json({ message: `Not Found` });
 });
 
 app.use(function (err, req, res, next) {

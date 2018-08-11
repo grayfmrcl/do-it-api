@@ -1,10 +1,8 @@
 const jwt = require('jsonwebtoken')
 
 const bearerAuth = (req, callback) => {
-
-    const authHeader = req.headers['Authorization'] || ' '
+    const authHeader = req.headers['authorization'] || ' '
     const token = authHeader.split(' ')
-
     if (token[0] != 'Bearer') { callback(new Error(`invalid token`)) }
     else {
         jwt.verify(token[1], process.env.JWT_SECRET, (err, decoded) => {

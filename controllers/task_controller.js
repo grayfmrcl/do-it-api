@@ -1,24 +1,30 @@
 const Task = require('../models/task')
 
 const getTasks = (req, res, next) => {
-    Task.find()
+    Task
+        .find({ user_id: req.user.id })
         .then(tasks => res.status(200).json(tasks))
         .catch(err => next(err))
 }
 
 const addTask = (req, res, next) => {
-
-    Task.create({
-        title: req.body.title,
-        due_time: req.body.due_time,
-        tags: req.body.tags
-    })
+    Task
+        .create({
+            user_id: req.user.id,
+            title: req.body.title,
+            due_time: req.body.due_time,
+            tags: req.body.tags
+        })
         .then(task => res.status(201).json(task))
         .catch(err => next(err))
 }
 
 const updateTask = (req, res, next) => {
-    Task.findById(req.params.id)
+    Task
+        .findOne({
+            user_id: req.user.id,
+            _id: req.params.id
+        })
         .then(task => {
             if (task) {
                 task.title = req.body.title || task.title
@@ -35,7 +41,11 @@ const updateTask = (req, res, next) => {
 }
 
 const deleteTask = (req, res, next) => {
-    Task.findByIdAndRemove(req.params.id)
+    Task
+        .findOneAndRemove({
+            user_id: req.user.id,
+            _id: req.params.id
+        })
         .then(task => {
             if (task)
                 res.status(200).json(task)
@@ -46,7 +56,11 @@ const deleteTask = (req, res, next) => {
 }
 
 const completeTask = (req, res, next) => {
-    Task.findById(req.params.id)
+    Task
+        .findOne({
+            user_id: req.user.id,
+            _id: req.params.id
+        })
         .then(task => {
             if (task) {
                 task.completed = true
@@ -57,11 +71,15 @@ const completeTask = (req, res, next) => {
             else
                 next()
         })
-        .catch(err => next(err)) 
+        .catch(err => next(err))
 }
 
 const uncompleteTask = (req, res, next) => {
-    Task.findById(req.params.id)
+    Task
+        .findOne({
+            user_id: req.user.id,
+            _id: req.params.id
+        })
         .then(task => {
             if (task) {
                 task.completed = false
