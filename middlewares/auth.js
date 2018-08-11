@@ -5,7 +5,7 @@ const authorize = () => {
         bearerAuth(req, (err, decoded) => {
             if (err) {
                 res.status(401).json({
-                    message: `You are unauthorized to make this request.`
+                    error: `you are unauthorized to make this request`
                 })
             }
             else {
