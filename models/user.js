@@ -4,7 +4,7 @@ const uniqueValidator = require('mongoose-unique-validator')
 const { genRandomString, hashString } = require('../helpers/crypto_helper')
 
 const userSchema = new mongoose.Schema({
-    name: { type: String, unique: true },
+    name: { type: String, },
     email: {
         type: String,
         required: [true, `email is required`],
@@ -29,17 +29,18 @@ const userSchema = new mongoose.Schema({
     password_salt: { type: String }
 })
 
+userSchema.plugin(uniqueValidator, { message: '{PATH} is already registered' });
+
 userSchema.statics.findByEmail = function (email) {
     return this.findOne({ email })
 }
 
 userSchema.pre('save', function (next) {
+    console.log(this)
     this.password_salt = genRandomString(7)
     this.password = hashString(this.password, this.password_salt)
 
     next()
 })
-
-userSchema.plugin(uniqueValidator, { message: '{PATH} is already registered' });
 
 module.exports = mongoose.model('User', userSchema)
