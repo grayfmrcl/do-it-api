@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
 
-const { hashPassword } = require('../helpers/auth_helper')
+const { genRandomString, hashString } = require('../helpers/crypto_helper')
 
 const userSchema = new mongoose.Schema({
     name: { type: String, unique: true },
@@ -29,10 +29,13 @@ const userSchema = new mongoose.Schema({
     password_salt: { type: String }
 })
 
+userSchema.statics.findByEmail = function (email) {
+    return this.findOne({ email })
+}
+
 userSchema.pre('save', function (next) {
-    let hash = hashPassword(this.password)
-    this.salt = hash.salt
-    this.password = hash.hashed_password
+    this.password_salt = genRandomString(7)
+    this.password = hashString(this.password, this.password_salt)
 
     next()
 })

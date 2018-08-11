@@ -1,29 +1,21 @@
-const crypto = require('crypto')
+const jwt = require('jsonwebtoken')
 
-const genRandomString = (length) => {
-    return crypto
-        .randomBytes(Math.ceil(length / 2))
-        .toString('hex')
+const bearerAuth = (req, callback) => {
+
+    const authHeader = req.headers['Authorization'] || ' '
+    const token = authHeader.split(' ')
+
+    if (token[0] != 'Bearer') { callback(new Error(`invalid token`)) }
+    else {
+        jwt.verify(token[1], process.env.JWT_SECRET, (err, decoded) => {
+            callback(err, decoded)
+        })
+    }
 }
 
-const hashString = function (value, salt) {
-    return crypto
-        .createHmac('md5', salt)
-        .update(value)
-        .digest('hex')
+const genAuthToken = (user, callback) => {
+    return jwt.sign(user, process.env.JWT_SECRET, callback)
 }
 
-const hashPassword = function (password) {
-    let salt = genRandomString(7)
-    let hashed_password = hashString(password, salt)
-    return { salt, hashed_password }
-}
-
-module.exports = {
-    hashPassword
-}
-
-
-
-
+module.exports = { bearerAuth, genAuthToken }
 

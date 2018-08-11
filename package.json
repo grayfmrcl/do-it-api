@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/grayfmrcl/do-it-api#readme",
   "dependencies": {
+    "dotenv": "^6.0.0",
     "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.7",
     "mongoose-unique-validator": "^2.0.1",
     "morgan": "^1.9.0"
