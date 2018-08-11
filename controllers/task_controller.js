@@ -1,12 +1,12 @@
 const Task = require('../models/task')
 
-const getTasks = (req, res) => {
+const getTasks = (req, res, next) => {
     Task.find()
         .then(tasks => res.status(200).json(tasks))
-        .catch(err => console.log(err))
+        .catch(err => next(err))
 }
 
-const addTask = (req, res) => {
+const addTask = (req, res, next) => {
 
     Task.create({
         title: req.body.title,
@@ -14,13 +14,10 @@ const addTask = (req, res) => {
         tags: req.body.tags
     })
         .then(task => res.status(201).json(task))
-        .catch(err => {
-            res.status(400)
-                .json(Object.values(err.errors).map(e => e.message))
-        })
+        .catch(err => next(err))
 }
 
-const updateTask = (req, res) => {
+const updateTask = (req, res, next) => {
     Task.findById(req.params.id)
         .then(task => {
             if (task) {
@@ -34,10 +31,10 @@ const updateTask = (req, res) => {
             else
                 next()
         })
-        .catch(err => console.log(err))
+        .catch(err => next(err))
 }
 
-const deleteTask = (req, res) => {
+const deleteTask = (req, res, next) => {
     Task.findByIdAndRemove(req.params.id)
         .then(task => {
             if (task)
@@ -45,25 +42,25 @@ const deleteTask = (req, res) => {
             else
                 next()
         })
-        .catch(err => console.log(err))
+        .catch(err => next(err))
 }
 
-const completeTask = (req, res) => {
+const completeTask = (req, res, next) => {
     Task.findById(req.params.id)
         .then(task => {
             if (task) {
                 task.completed = true
                 task.save()
                     .then(task => res.status(200).json(task))
-                    .catch(err => console.log(err))
+                    .catch(err => next(err))
             }
             else
                 next()
         })
-        .catch(err => console.log(err))    
+        .catch(err => next(err)) 
 }
 
-const uncompleteTask = (req, res) => {
+const uncompleteTask = (req, res, next) => {
     Task.findById(req.params.id)
         .then(task => {
             if (task) {
@@ -75,7 +72,7 @@ const uncompleteTask = (req, res) => {
             else
                 next()
         })
-        .catch(err => console.log(err))
+        .catch(err => next(err))
 }
 
 module.exports = {
