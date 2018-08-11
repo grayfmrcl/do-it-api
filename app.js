@@ -28,7 +28,9 @@ app.use('*', function (req, res) {
 app.use(function (err, req, res, next) {
     if (err.name == 'ValidationError') {
         res.status(400)
-            .json(Object.values(err.errors).map(e => e.message))
+            .json({ 
+                message: Object.values(err.errors).map(e => e.message) 
+            })
     }
     else {
         console.log(err)

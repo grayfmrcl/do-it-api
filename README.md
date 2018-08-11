@@ -1,12 +1,98 @@
 # do-it-api
 
-**Authenticion**
+**Authorization**
+---
   
-  Set `Bearer token` in `Authorization` request headers  
+  Set `Bearer` token in `authorization` request headers  
 
 * **Headers**
   
-  `Authorization: Bearer YOUR_TOKEN_HERE`
+  `authorization: Bearer YOUR_TOKEN_HERE`
+---
+
+**Sign Up**
+----
+  Sig up to the application.
+
+* **URL**
+
+  auth/signup
+
+* **Method:**
+
+  `POST`
+  
+*  **Body Params**
+
+  | key      | type     | required |
+  |---       |---       |---       |
+  | name     | String   | no       |
+  | email    | Email    | yes      |
+  | password | Password | yes      |
+
+* **Success Response:**
+
+  * **Code:** 200 OK <br />
+  **Content:** 
+  ```json
+  {
+    "id": "1qaz2wsx3edc4rfv4rfv5tgb",
+    "email": "johndoe@mail.com",
+    "name": "John Doe"
+  }
+  ```
+ 
+* **Error Response:**
+
+    * **Code:** 400 BAD REQUEST <br />
+    **Content:** 
+  ```json
+    { 
+      "message" : [ 
+        "email is required",
+        "password is required"
+      ] 
+    }
+  ```
+---
+
+**Sign In**
+----
+  Sign in to the application.
+
+* **URL**
+
+  auth/signin
+
+* **Method:**
+
+  `POST`
+  
+*  **Body Params**
+
+  | key      | type     | required |
+  |---       |---       |---       |
+  | name     | String   | no       |
+  | email    | Email    | yes      |
+  | password | Password | yes      |
+
+* **Success Response:**
+
+  * **Code:** 200 OK <br />
+  **Content:** 
+  ```json
+  {
+    "id": "1qaz2wsx3edc4rfv4rfv5tgb",
+    "name": "Tieria",
+    "auth_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+  }
+  ```
+ 
+* **Error Response:**
+
+    * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ "message": "incorrect email/password" }`
+---
 
 **Get Tasks**
 ----
@@ -19,14 +105,6 @@
 * **Method:**
 
   `GET`
-  
-*  **URL Params**
-
-   None
-
-* **Query Params**
-
-  None
 
 * **Success Response:**
 
@@ -65,7 +143,8 @@
 * **Error Response:**
 
     * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "You are unauthorized to make this request." }`
+    **Content:** `{ error : "you are unauthorized to make this request" }`
+---
 
 **Add Task**
 ----
@@ -111,7 +190,8 @@
 * **Error Response:**
 
     * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "You are unauthorized to make this request." }`
+    **Content:** `{ error : "you are unauthorized to make this request" }`
+---
 
 **Update Task**
 ----
@@ -159,7 +239,8 @@
 * **Error Response:**
 
     * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "You are unauthorized to make this request." }`
+    **Content:** `{ error : "you are unauthorized to make this request" }`
+---
 
 **Delete Task**
 ----
@@ -200,6 +281,7 @@
 
     * **Code:** 401 UNAUTHORIZED <br />
     **Content:** `{ error : "You are unauthorized to make this request." }`
+---
 
 **Complete Task**
 ----
@@ -240,14 +322,15 @@
 
     * **Code:** 401 UNAUTHORIZED <br />
     **Content:** `{ error : "You are unauthorized to make this request." }`
+---
 
-**Complete Task**
+**Uncomplete Task**
 ----
-  Mark an authenticated user's task as completed.
+  Mark an authenticated user's task as incompleted.
 
 * **URL**
 
-  /tasks/:task_id/complete
+  /tasks/:task_id/uncomplete
 
 * **Method:**
 
@@ -269,7 +352,7 @@
         "due_time": "2018-08-12T01:45:00.000Z",
         "title": "clean room",
         "tags": [],
-        "completed": true,
+        "completed": false,
         "created_at": "2018-08-11T07:54:13.876Z",
         "updated_at": "2018-08-11T07:56:11.495Z",
         "__v": 0
@@ -279,4 +362,4 @@
 * **Error Response:**
 
     * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "You are unauthorized to make this request." }`
+    **Content:** `{ error : "you are unauthorized to make this request" }`
