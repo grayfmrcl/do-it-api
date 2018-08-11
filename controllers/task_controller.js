@@ -32,7 +32,7 @@ const updateTask = (req, res) => {
                     .catch(err => console.log(err))
             }
             else
-                res.status(204).json()
+                next()
         })
         .catch(err => console.log(err))
 }
@@ -43,7 +43,7 @@ const deleteTask = (req, res) => {
             if (task)
                 res.status(200).json(task)
             else
-                res.status(204).json()
+                next()
         })
         .catch(err => console.log(err))
 }
@@ -58,7 +58,7 @@ const completeTask = (req, res) => {
                     .catch(err => console.log(err))
             }
             else
-                res.status(204).json()
+                next()
         })
         .catch(err => console.log(err))    
 }
@@ -73,7 +73,7 @@ const uncompleteTask = (req, res) => {
                     .catch(err => console.log(err))
             }
             else
-                res.status(204).json()
+                next()
         })
         .catch(err => console.log(err))
 }

@@ -20,4 +20,8 @@ app.use(express.json())
 
 app.use('/', routers)
 
+app.use('*', function (req, res) {
+    res.status(404).json({ message: `NOT FOUND` });
+});
+
 app.listen(port, () => console.log(`listening to port ${port}`))
