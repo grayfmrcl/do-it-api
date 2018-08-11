@@ -160,7 +160,7 @@
     |---       |---              |---       |
     | title    | String          | yes      |
     | due_time | Date            |          |
-    | tasks    | Array of string |          |
+    | tags     | Array of string |          |
 
 * **Success Response:**
 
@@ -207,7 +207,7 @@
     |---       |---              |---       |
     | title    | String          | yes      |
     | due_time | Date            |          |
-    | tasks    | Array of string |          |
+    | tags    | Array of string |          |
 
 * **Success Response:**
 
