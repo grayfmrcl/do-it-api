@@ -8,7 +8,6 @@
 * **Headers**
   
   `authorization: Bearer YOUR_TOKEN_HERE`
----
 
 **Sign Up**
 ----
@@ -41,7 +40,6 @@
     "name": "John Doe"
   }
   ```
- 
 * **Error Response:**
 
     * **Code:** 400 BAD REQUEST <br />
@@ -54,7 +52,6 @@
       ] 
     }
   ```
----
 
 **Sign In**
 ----
@@ -87,12 +84,10 @@
     "auth_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
   }
   ```
- 
 * **Error Response:**
 
     * **Code:** 400 BAD REQUEST <br />
     **Content:** `{ "message": "incorrect email/password" }`
----
 
 **Get Tasks**
 ----
@@ -139,12 +134,10 @@
         },
     ]
     ```
- 
 * **Error Response:**
 
     * **Code:** 401 UNAUTHORIZED <br />
     **Content:** `{ error : "you are unauthorized to make this request" }`
----
 
 **Add Task**
 ----
@@ -186,12 +179,10 @@
         "__v": 0
     }
     ```
- 
 * **Error Response:**
 
     * **Code:** 401 UNAUTHORIZED <br />
     **Content:** `{ error : "you are unauthorized to make this request" }`
----
 
 **Update Task**
 ----
@@ -235,12 +226,10 @@
         "__v": 0
     }
     ```
- 
 * **Error Response:**
 
     * **Code:** 401 UNAUTHORIZED <br />
     **Content:** `{ error : "you are unauthorized to make this request" }`
----
 
 **Delete Task**
 ----
@@ -276,12 +265,10 @@
         "__v": 0
     }
     ```
- 
 * **Error Response:**
 
     * **Code:** 401 UNAUTHORIZED <br />
     **Content:** `{ error : "You are unauthorized to make this request." }`
----
 
 **Complete Task**
 ----
@@ -317,12 +304,10 @@
         "__v": 0
     }
     ```
- 
 * **Error Response:**
 
     * **Code:** 401 UNAUTHORIZED <br />
     **Content:** `{ error : "You are unauthorized to make this request." }`
----
 
 **Uncomplete Task**
 ----
@@ -358,7 +343,6 @@
         "__v": 0
     }
     ```
- 
 * **Error Response:**
 
     * **Code:** 401 UNAUTHORIZED <br />
