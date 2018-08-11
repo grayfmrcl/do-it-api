@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const logger = require('morgan')
 
 const routers = require('./routers')
 
@@ -12,9 +13,11 @@ const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', () => console.log('connected to db!'))
 
-app.use('/', routers)
+app.use(logger('dev'))
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
+
+app.use('/', routers)
 
 app.listen(port, () => console.log(`listening to port ${port}`))

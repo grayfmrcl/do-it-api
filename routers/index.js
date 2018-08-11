@@ -1,7 +1,11 @@
 const router = require('express').Router()
 
-router.get('/api', (req, res, next) => {
+const tasks = require('./task_router')
+
+router.get('/', (req, res, next) => {
     res.status(200).json({ message: 'connected' })
 })
+
+router.use('/tasks', tasks)
 
 module.exports = router
