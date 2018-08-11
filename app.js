@@ -24,4 +24,15 @@ app.use('*', function (req, res) {
     res.status(404).json({ message: `NOT FOUND` });
 });
 
+app.use(function (err, req, res, next) {
+    if (err.name == 'ValidationError') {
+        res.status(400)
+            .json(Object.values(err.errors).map(e => e.message))
+    }
+    else {
+        console.log(err)
+        res.status(500).json({ message: `oops! something went wrong` })
+    }
+});
+
 app.listen(port, () => console.log(`listening to port ${port}`))
