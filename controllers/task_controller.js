@@ -20,6 +20,8 @@ const addTask = (req, res, next) => {
 }
 
 const updateTask = (req, res, next) => {
+    console.log('user_id', req.user.id)
+    console.log('task_id', req.params.id)
     Task
         .findOne({
             user_id: req.user.id,
@@ -28,7 +30,7 @@ const updateTask = (req, res, next) => {
         .then(task => {
             if (task) {
                 task.title = req.body.title || task.title
-                task.due_time = new Date(req.body.due_time) == 'Invalid Date' ? new Date : new Date(req.body.due_time)
+                task.due_time = new Date(req.body.due_time)
                 task.tags = req.body.tags || task.tags
                 task.save()
                     .then(task => res.status(200).json(task))

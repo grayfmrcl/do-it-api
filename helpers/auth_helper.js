@@ -11,8 +11,17 @@ const bearerAuth = (req, callback) => {
     }
 }
 
-const genAuthToken = (user, callback) => {
-    return jwt.sign(user, process.env.JWT_SECRET, callback)
+const genAuthToken = (user, req, res, next) => {
+    jwt.sign({ id: user._id }, process.env.JWT_SECRET, (err, token) => {
+        if (err) { next() }
+        else {
+            res.status(200)
+                .json({
+                    message: 'success',
+                    auth_token: token
+                })
+        }
+    })
 }
 
 module.exports = { bearerAuth, genAuthToken }
