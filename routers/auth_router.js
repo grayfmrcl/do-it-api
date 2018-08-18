@@ -2,10 +2,12 @@ const router = require('express').Router()
 
 const tasks = require('./task_router')
 
-const { signUp, signInLocal, signInFacebook } = require('../controllers/auth_controller')
+const local = require('../auth/local')
+const facebook = require('../auth/facebook')
 
-router.post('/signup', signUp)
-router.post('/signin', signInLocal)
-router.post('/signin/fb', signInFacebook)
+
+router.post('/signup', local.signUp)
+router.post('/signin', local.signIn)
+router.post('/facebook', facebook)
 
 module.exports = router
