@@ -42,7 +42,6 @@ userSchema.methods.validPassword = function (password) {
 }
 
 userSchema.pre('save', function (next) {
-    console.log('HAHAHAHA', this)
     if (this.local.password) {
         this.local.password_salt = genRandomString(10)
         this.local.password = hashString(this.local.password, this.local.password_salt)

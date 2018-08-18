@@ -6,6 +6,6 @@ const { signUp, signInLocal, signInFacebook } = require('../controllers/auth_con
 
 router.post('/signup', signUp)
 router.post('/signin', signInLocal)
-router.post('/signin/fb', signInFacebook)
+router.post('/facebook', signInFacebook)
 
 module.exports = router
