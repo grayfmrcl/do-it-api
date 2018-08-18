@@ -3,7 +3,21 @@ const router = require('express').Router()
 const auth = require('./auth_router')
 const user = require('./user_router')
 
-const { authorize } = require('../middlewares/auth')
+const { bearerAuth } = require('../helpers/auth_helper')
+
+const authorized = (req, res, next) => {
+    bearerAuth(req, (err, decoded) => {
+        if (err) {
+            res.status(401).json({
+                error: `you are unauthorized to make this request`
+            })
+        }
+        else {
+            req.user = { id: decoded.id, name: decoded.name }
+            next()
+        }
+    })
+}
 
 
 router.get('/', (req, res, next) => {
@@ -11,6 +25,6 @@ router.get('/', (req, res, next) => {
 })
 
 router.use('/auth', auth)
-router.use('/user', authorize(), user)
+router.use('/user', authorized, user)
 
 module.exports = router

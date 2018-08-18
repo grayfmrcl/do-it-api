@@ -1,6 +1,6 @@
 const User = require("../models/user");
 
-const oauth = require("./helpers/oauth_helper");
+const oauth = require("../helpers/oauth_helper");
 const { genAuthToken, bearerAuth } = require("../helpers/auth_helper");
 
 module.exports = (req, res, next) => {
@@ -37,8 +37,8 @@ module.exports = (req, res, next) => {
               "facebook.email": fb_profile.email
             }
           )
-            .then(() => {
-              res.status(200).json({ message: `connected with facebook` });
+            .then(_user => {
+              res.status(200).json(_user.getProfile());
             })
             .catch(err => next(err));
         }

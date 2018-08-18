@@ -24,11 +24,18 @@ const userSchema = new mongoose.Schema({
         password_salt: { type: String }
     },
     facebook: {
-        connected: { type: Boolean, default: false },
         id: String,
         name: String,
         email: String
     }
+})
+
+userSchema.pre('save', function (next) {
+    if (this.local.password) {
+        this.local.password_salt = genRandomString(10)
+        this.local.password = hashString(this.local.password, this.local.password_salt)
+    }
+    next()
 })
 
 userSchema.plugin(uniqueValidator, { message: '{PATH} is already registered' });
@@ -41,12 +48,13 @@ userSchema.methods.validPassword = function (password) {
     return this.local.password === hashString(password, this.local.password_salt)
 }
 
-userSchema.pre('save', function (next) {
-    if (this.local.password) {
-        this.local.password_salt = genRandomString(10)
-        this.local.password = hashString(this.local.password, this.local.password_salt)
+userSchema.methods.getProfile = function() {
+    return {
+        id: this._id,
+        name: this.local.name,
+        email: this.local.email,
+        facebook: this.facebook
     }
-    next()
-})
+}
 
 module.exports = mongoose.model('User', userSchema)
