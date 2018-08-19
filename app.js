@@ -4,6 +4,7 @@ const logger = require('morgan')
 require('dotenv').config()
 
 const routers = require('./routers')
+const passport = require('./passport')
 
 const port = process.env.PORT || 3000
 const app = express()
@@ -22,8 +23,10 @@ app.use(express.json())
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next(); 
+    next();
 });
+
+app.use(passport.initialize())
 
 app.use('/', routers)
 
@@ -34,8 +37,8 @@ app.use('*', function (req, res) {
 app.use(function (err, req, res, next) {
     if (err.name == 'ValidationError') {
         res.status(400)
-            .json({ 
-                message: Object.values(err.errors).map(e => e.message) 
+            .json({
+                message: Object.values(err.errors).map(e => e.message)
             })
     }
     else {
